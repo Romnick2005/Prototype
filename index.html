@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Classroom Monitoring System</title>
+  <title>Classroom Monitoring System - Workbench</title>
+  <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -16,277 +17,240 @@
       background-color: #f4f6f9;
       color: #333;
     }
-    /* Header & Top Bar */
+    /* Header Bar */
     header {
       background-color: #1e293b;
       color: #fff;
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .header-brand h1 {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: #fff;
+      font-weight: 600;
     }
     .user-controls {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
     }
     .user-info {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      font-size: 0.85rem;
     }
     .composite-name {
-      font-weight: 600;
+      font-weight: 700;
+      color: #38bdf8;
     }
     .role-badge {
-      background-color: #3b82f6;
+      background-color: #2563eb;
       color: #fff;
-      padding: 0.2rem 0.5rem;
+      padding: 0.15rem 0.4rem;
       border-radius: 4px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       margin-top: 2px;
     }
+    .perspective-select {
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
     /* Layout Containers */
     .container {
-      max-width: 1250px;
-      margin: 2rem auto;
+      max-width: 1380px;
+      margin: 1.5rem auto;
       padding: 0 1rem;
     }
     .card {
       background: #fff;
-      padding: 1.5rem;
+      padding: 1.25rem;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
     }
     .card h2, section h2 {
       margin-bottom: 1rem;
       color: #1e293b;
+      font-size: 1.25rem;
     }
-    .card h3 {
-      color: #1e293b;
-      margin-bottom: 0.3rem;
-    }
-    .card-meta {
-      color: #64748b;
-      font-size: 0.85rem;
+
+    /* Action Buttons Area */
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
       margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #e2e8f0;
     }
-    /* Forms & Inputs */
+
+    /* Forms and Inputs */
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
       display: flex;
       flex-direction: column;
     }
     .form-row {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
     }
     .form-row .form-group {
       flex: 1;
-      min-width: 150px;
+      min-width: 140px;
     }
     .form-group label {
       margin-bottom: 0.3rem;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      color: #475569;
     }
     .form-group input, 
-    .form-group select,
-    .user-controls select {
-      padding: 0.6rem;
-      border: 2px solid #ccc;
+    .form-group select {
+      padding: 0.5rem;
+      border: 1px solid #cbd5e1;
       border-radius: 4px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       width: 100%;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .user-controls select {
-      padding: 0.4rem;
-      background: #fff;
-      color: #333;
+    .form-group input:focus, .form-group select:focus {
+      border-color: #2563eb;
     }
-    .error-msg {
-      color: #ef4444;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-      min-height: 1.1rem;
-      display: block;
-    }
+
     .password-wrapper {
       position: relative;
       display: flex;
       align-items: center;
     }
     .password-wrapper input {
-      padding-right: 2.5rem;
+      padding-right: 2.2rem;
     }
     .password-wrapper .toggle-password {
       position: absolute;
-      right: 0.75rem;
+      right: 0.6rem;
       cursor: pointer;
       color: #64748b;
-      font-size: 1.1rem;
-      user-select: none;
     }
+
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      padding: 0.5rem 0;
+      gap: 0.5rem;
+      padding: 0.3rem 0;
     }
     .checkbox-label {
       display: flex;
       align-items: center;
-      gap: 0.3rem;
-      font-weight: normal !important;
-      cursor: pointer;
+      gap: 0.25rem;
+      font-size: 0.85rem;
       background: #f1f5f9;
-      padding: 0.4rem 0.6rem;
+      padding: 0.3rem 0.5rem;
       border-radius: 4px;
       border: 1px solid #cbd5e1;
+      cursor: pointer;
     }
-    .auth-toggle {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-    .auth-toggle a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 600;
-    }
+
     /* Buttons */
     .btn {
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-weight: 600;
-      transition: background-color 0.2s ease;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background-color 0.2s;
     }
-    .btn-primary {
-      background-color: #2563eb;
-      color: #fff;
-    }
-    .btn-primary:hover {
-      background-color: #1d4ed8;
-    }
-    .btn-secondary {
-      background-color: #64748b;
-      color: #fff;
-    }
-    .btn-secondary:hover {
-      background-color: #475569;
-    }
-    .btn-danger {
-      background-color: #ef4444;
-      color: #fff;
-    }
-    .btn-danger:hover {
-      background-color: #dc2626;
-    }
-    .btn-warning {
-      background-color: #f59e0b;
-      color: #fff;
-    }
-    .btn-warning:hover {
-      background-color: #d97706;
-    }
-    .btn-small {
-      padding: 0.35rem 0.6rem;
-      font-size: 0.8rem;
-    }
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.5rem;
-      margin-top: 1.5rem;
-    }
-    .action-toolbar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
+    .btn-primary { background-color: #2563eb; color: #fff; }
+    .btn-primary:hover { background-color: #1d4ed8; }
+    .btn-secondary { background-color: #64748b; color: #fff; }
+    .btn-secondary:hover { background-color: #475569; }
+    .btn-success { background-color: #16a34a; color: #fff; }
+    .btn-success:hover { background-color: #15803d; }
+    .btn-danger { background-color: #dc2626; color: #fff; }
+    .btn-danger:hover { background-color: #b91c1c; }
+    .btn-warning { background-color: #d97706; color: #fff; }
+    .btn-warning:hover { background-color: #b45309; }
+    .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+
     /* Tables */
-    .data-table, table {
+    .table-container {
+      overflow-x: auto;
+    }
+    .data-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 0.5rem;
-      background: #fff;
+      font-size: 0.85rem;
     }
-    th, td {
-      padding: 0.75rem;
+    .data-table th, .data-table td {
+      padding: 0.65rem;
       border: 1px solid #e2e8f0;
       text-align: left;
-      font-size: 0.88rem;
     }
-    th {
-      background-color: #f1f5f9;
+    .data-table th {
+      background-color: #f8fafc;
       font-weight: 600;
       color: #334155;
     }
-    tr.gender-header td {
+
+    /* Student Image Thumbnail */
+    .student-img-thumb {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
       background-color: #e2e8f0;
-      font-weight: bold;
-      color: #475569;
-      text-transform: uppercase;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .no-img-badge {
       font-size: 0.75rem;
-      letter-spacing: 0.05em;
-    }
-    
-    /* Guidance Perspective Custom Styles */
-    tr.row-flagged {
-      border-left: 5px solid #ef4444 !important;
-      background-color: #fef2f2;
-    }
-    .week-graph {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-    .day-pill {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 3px 6px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      min-width: 38px;
-    }
-    .status-normal {
-      background-color: #dcfce7;
-      color: #15803d;
-      border: 1px solid #86efac;
-    }
-    .status-flagged {
-      background-color: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fca5a5;
-    }
-    .action-btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      color: #94a3b8;
+      font-style: italic;
     }
 
+    /* Guidance Table Enhancements */
+    .guidance-table td { vertical-align: middle; }
+    .flagged-row { border-left: 4px solid #ef4444 !important; background-color: #fffbfb; }
+    .normal-row { border-left: 4px solid #10b981 !important; }
+    
+    /* Week Day Badge Graph */
+    .week-graph {
+      display: flex;
+      gap: 3px;
+    }
+    .day-badge {
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 0.68rem;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 26px;
+      border: 1px solid #cbd5e1;
+    }
+    .day-badge.ok { background-color: #dcfce7; color: #166534; border-color: #86efac; }
+    .day-badge.warn { background-color: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+
     /* Modals & Overlays */
-    .auth-overlay, .modal {
+    .auth-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(2px);
       display: flex;
       justify-content: center;
@@ -295,88 +259,112 @@
     }
     .modal-card {
       background: #fff;
-      padding: 2rem;
+      padding: 1.5rem;
       border-radius: 8px;
       width: 100%;
-      max-width: 560px;
+      max-width: 500px;
       max-height: 90vh;
       overflow-y: auto;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      position: relative;
     }
-    .modal-card h2, .modal-card h3 {
-      margin-bottom: 1.2rem;
-      color: #1e293b;
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
     }
-    .hidden {
-      display: none !important;
+
+    /* Score Input Fields for Teacher Gradebook */
+    .score-input {
+      width: 55px;
+      padding: 0.25rem;
+      text-align: center;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
     }
+    .col-header-del {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+    .btn-del-col {
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .btn-del-col:hover { color: #991b1b; }
+
+    .grade-badge {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+    .grade-pass { background-color: #dcfce7; color: #15803d; }
+    .grade-fail { background-color: #fee2e2; color: #b91c1c; }
+
+    .hidden { display: none !important; }
+    .auth-toggle { margin-top: 0.8rem; font-size: 0.85rem; text-align: center; }
+    .auth-toggle a { color: #2563eb; text-decoration: none; font-weight: 600; }
   </style>
 </head>
 <body>
 
   <!-- AUTHENTICATION MODAL OVERLAY -->
   <div id="authModal" class="auth-overlay">
-    <div id="loginModal" class="modal-card">
-      <h2 id="authTitle">Please Log In</h2>
+    <div class="modal-card">
+      <h2 id="authTitle" style="margin-bottom: 1rem;">Login to Workbench</h2>
       
       <!-- LOGIN FORM -->
-      <form id="loginForm" novalidate onsubmit="handleLoginSubmit(event)">
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
         <div class="form-group">
-          <label for="loginEmail">Email Address</label>
-          <input type="email" id="loginEmail" required placeholder="teacher@school.edu" value="bagusaia@gmail.com">
-          <span class="error-msg" id="loginEmailError"></span>
+          <label>Email Address</label>
+          <input type="email" id="loginEmail" required placeholder="teacher@school.edu" value="bagusaia@school.edu">
         </div>
         <div class="form-group">
-          <label for="loginPassword">Password</label>
+          <label>Password</label>
           <div class="password-wrapper">
-            <input type="password" id="loginPassword" required placeholder="••••••••" value="123456">
+            <input type="password" id="loginPassword" required placeholder="••••••••" value="password123">
             <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordVisibility('loginPassword', this)"></i>
           </div>
-          <span class="error-msg" id="loginPasswordError"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Log In</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
         <p class="auth-toggle">Don't have an account? <a href="#" onclick="switchAuthTab('register')">Register here</a></p>
       </form>
 
       <!-- REGISTER FORM -->
-      <form id="registerForm" class="hidden" novalidate onsubmit="handleRegisterSubmit(event)">
+      <form id="registerForm" class="hidden" onsubmit="handleRegisterSubmit(event)">
         <div class="form-row">
           <div class="form-group">
-            <label for="regFirstName">First Name *</label>
+            <label>First Name *</label>
             <input type="text" id="regFirstName" required placeholder="Maria">
           </div>
           <div class="form-group">
-            <label for="regMiddleName">Middle Name</label>
-            <input type="text" id="regMiddleName" placeholder="Santos">
-          </div>
-          <div class="form-group">
-            <label for="regLastName">Last Name *</label>
+            <label>Last Name *</label>
             <input type="text" id="regLastName" required placeholder="Dela Cruz">
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="regEmail">Email Address *</label>
-            <input type="email" id="regEmail" required placeholder="teacher@school.edu">
-          </div>
-          <div class="form-group">
-            <label for="regPassword">Password *</label>
-            <div class="password-wrapper">
-              <input type="password" id="regPassword" required placeholder="••••••••">
-              <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordVisibility('regPassword', this)"></i>
-            </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="regEmail" required placeholder="teacher@school.edu">
+        </div>
+        <div class="form-group">
+          <label>Password *</label>
+          <div class="password-wrapper">
+            <input type="password" id="regPassword" required placeholder="••••••••">
+            <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordVisibility('regPassword', this)"></i>
           </div>
         </div>
         <div class="form-group">
-          <label for="regTeacherCategory">Teacher Category *</label>
+          <label>Teacher Category *</label>
           <select id="regTeacherCategory">
-            <option value="Teacher Only">Teacher Only</option>
             <option value="Teacher with Advisory">Teacher with Advisory</option>
+            <option value="Teacher Only">Teacher Only</option>
             <option value="Guidance">Guidance</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Register Account</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Register Account</button>
         <p class="auth-toggle">Already have an account? <a href="#" onclick="switchAuthTab('login')">Log in here</a></p>
       </form>
     </div>
@@ -394,323 +382,673 @@
         <span id="userBadge" class="role-badge">Teacher with Advisory</span>
       </div>
       <div>
-        <label for="perspectiveSwitcher" style="font-size:0.85rem; margin-right:5px;">Perspective:</label>
-        <select id="perspectiveSwitcher" onchange="handlePerspectiveChange()">
-          <option value="Adviser Perspective">Adviser Perspective</option>
-          <option value="Subject Teacher Perspective">Subject Teacher Perspective</option>
-          <option value="Guidance Perspective" selected>Guidance Perspective</option>
+        <label for="perspectiveSwitcher" style="font-size: 0.75rem; color:#cbd5e1; display:block;">Perspective:</label>
+        <select id="perspectiveSwitcher" class="perspective-select" onchange="handlePerspectiveChange()">
+          <option value="adviser">Adviser Perspective</option>
+          <option value="teacher">Subject Teacher Perspective</option>
+          <option value="guidance">Guidance Perspective</option>
         </select>
       </div>
-      <button id="logoutBtn" onclick="handleLogout()" class="btn btn-secondary btn-small">Log Out</button>
+      <button id="logoutBtn" onclick="handleLogout()" class="btn btn-secondary btn-sm"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
     </div>
   </header>
 
-  <!-- MAIN APP CONTAINER -->
+  <!-- WORKBENCH APP CONTENT -->
   <main id="appContent" class="container hidden">
-    <div id="actionButtons" class="action-toolbar hidden">
-      <button class="btn btn-primary" onclick="openAddStudentModal()">Add Student</button>
-      <button class="btn btn-primary" onclick="openAddScheduleModal()">Add Schedule</button>
-    </div>
 
-    <!-- ADVISER PERSPECTIVE SECTION -->
-    <section id="adviserSection" class="role-section hidden">
-      <h2>Adviser Perspective - Advisory Class Roster</h2>
+    <!-- ADVISER PERSPECTIVE -->
+    <section id="adviserSection" class="role-section">
+      <!-- EXCLUSIVE ACTION BUTTONS FOR ADVISER ONLY -->
+      <div class="action-bar">
+        <button class="btn btn-primary" onclick="openAddStudentModal()"><i class="fa-solid fa-user-plus"></i> Add Student</button>
+        <button class="btn btn-primary" onclick="openAddScheduleModal()"><i class="fa-solid fa-calendar-plus"></i> Add Schedule</button>
+      </div>
+
+      <!-- Advisory Class Roster -->
       <div class="card">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>LRN / Student ID</th>
-              <th>Name</th>
-              <th>Gender</th>
-              <th>Face Photo</th>
-              <th>Section</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="studentTableBody"></tbody>
-        </table>
+        <h2>Adviser Perspective - Advisory Class Roster (Section Alpha)</h2>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Photo</th>
+                <th>LRN / Student ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Section</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Class Schedules (Adviser Only) -->
+      <div class="card">
+        <h2>Class Schedules</h2>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Section</th>
+                <th>Day</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <!-- GUIDANCE PERSPECTIVE SECTION -->
-    <section id="guidanceSection" class="role-section">
-      <h2>Guidance Perspective</h2>
+    <!-- SUBJECT TEACHER PERSPECTIVE -->
+    <section id="teacherSection" class="role-section hidden">
       <div class="card">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Log ID</th>
-              <th>Timestamp</th>
-              <th>Student Name</th>
-              <th>Section</th>
-              <th>Assessment Event</th>
-              <th>Status</th>
-              <th>Week Graph (5 Days)</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="assessmentLogTableBody"></tbody>
-        </table>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h2>Subject Teacher Perspective - Science (Section Alpha)</h2>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-success btn-sm" onclick="addQuizColumn()"><i class="fa-solid fa-plus"></i> Add Quiz</button>
+            <button class="btn btn-warning btn-sm" onclick="addPerformanceColumn()"><i class="fa-solid fa-plus"></i> Add Performance Task</button>
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <table class="data-table" id="teacherGradebookTable">
+            <thead>
+              <tr id="gradebookHeaderRow">
+                <th>LRN</th>
+                <th>Student Name</th>
+                <th>Gender</th>
+                <th>Exam 1 (100)</th>
+                <th>Exam 2 (100)</th>
+                <!-- Dynamic Quizzes and Performances injected here -->
+                <th>Average Grade</th>
+              </tr>
+            </thead>
+            <tbody id="teacherGradebookBody"></tbody>
+          </table>
+        </div>
       </div>
     </section>
+
+    <!-- GUIDANCE PERSPECTIVE -->
+    <section id="guidanceSection" class="role-section hidden">
+      <div class="card">
+        <h2>Guidance Perspective</h2>
+        <div class="table-container">
+          <table class="data-table guidance-table">
+            <thead>
+              <tr>
+                <th>Log ID</th>
+                <th>Timestamp</th>
+                <th>Student Name</th>
+                <th>Section</th>
+                <th>Assessment Event</th>
+                <th>Status</th>
+                <th>Week Graph (5 Days)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="assessmentLogTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- SELECT DAY REVIEW MODAL -->
-  <div id="selectDayModal" class="auth-overlay hidden">
+  <!-- ADD / EDIT STUDENT MODAL -->
+  <div id="addStudentModal" class="auth-overlay hidden">
     <div class="modal-card">
-      <h3 id="selectDayModalTitle">Select Day to Review</h3>
-      <p id="selectDayModalSub" style="margin-bottom: 1rem; color: #64748b; font-size: 0.9rem;"></p>
+      <h3 id="studentModalTitle" style="margin-bottom: 1rem;">Add Student</h3>
+      <form id="addStudentForm" onsubmit="handleSaveStudent(event)">
+        <input type="hidden" id="editStudentId">
+        <div class="form-group">
+          <label>LRN / Student Number</label>
+          <input type="text" id="studNumber" required placeholder="e.g. 102345678912">
+        </div>
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="studFirstName" required placeholder="Juan">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="studLastName" required placeholder="Dela Cruz">
+        </div>
+        <div class="form-group">
+          <label>Student Image URL</label>
+          <input type="text" id="studImageUrl" value="None" placeholder="None or https://example.com/photo.jpg">
+        </div>
+        <div class="form-group">
+          <label>Gender</label>
+          <select id="studGender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Section</label>
+          <select id="studSectionSelect">
+            <option value="Alpha">Alpha</option>
+            <option value="Beta">Beta</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Save Student</button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD SCHEDULE MODAL -->
+  <div id="addScheduleModal" class="auth-overlay hidden">
+    <div class="modal-card">
+      <h3 style="margin-bottom: 1rem;">Add Class Schedule</h3>
+      <form id="addScheduleForm" onsubmit="handleSaveSchedule(event)">
+        <div class="form-group">
+          <label>Subject Name</label>
+          <input type="text" id="schedSubject" required placeholder="e.g. Science">
+        </div>
+        <div class="form-group">
+          <label>Teacher Name</label>
+          <input type="text" id="schedTeacher" required placeholder="e.g. BAGUSAIA">
+        </div>
+        <div class="form-group">
+          <label>Day of Week *</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" name="schedDay" value="Mon"> Mon</label>
+            <label class="checkbox-label"><input type="checkbox" name="schedDay" value="Tue"> Tue</label>
+            <label class="checkbox-label"><input type="checkbox" name="schedDay" value="Wed"> Wed</label>
+            <label class="checkbox-label"><input type="checkbox" name="schedDay" value="Thu"> Thu</label>
+            <label class="checkbox-label"><input type="checkbox" name="schedDay" value="Fri"> Fri</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start Time</label>
+            <input type="time" id="schedStart" required value="08:00">
+          </div>
+          <div class="form-group">
+            <label>End Time</label>
+            <input type="time" id="schedEnd" required value="09:00">
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Save Schedule</button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal('addScheduleModal')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- REVIEW INTERACTION / VIDEO MODAL -->
+  <div id="guidanceActionModal" class="auth-overlay hidden">
+    <div class="modal-card">
+      <h3 id="guidanceModalTitle" style="margin-bottom: 0.5rem;">Review Interaction</h3>
+      <p id="guidanceModalSub" style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">Select day for student: Santos, Maria S.</p>
       
       <div class="form-group">
-        <label for="reviewDaySelect">Available Day Logs:</label>
-        <select id="reviewDaySelect">
-          <option value="Mon">Day 1 - Mon (2026-09-25)</option>
-          <option value="Tue">Day 2 - Tue (2026-09-26)</option>
-          <option value="Wed">Day 3 - Wed (2026-09-27)</option>
-          <option value="Thu">Day 4 - Thu (2026-09-28)</option>
-          <option value="Fri">Day 5 - Fri (2026-09-29)</option>
+        <label>Available Day Logs:</label>
+        <select id="guidanceDaySelect">
+          <option>Day 1 - Mon (2026-09-25)</option>
+          <option>Day 2 - Tue (2026-09-26)</option>
+          <option>Day 3 - Wed (2026-09-27)</option>
+          <option>Day 4 - Thu (2026-09-28)</option>
+          <option>Day 5 - Fri (2026-09-29)</option>
         </select>
       </div>
 
       <div class="modal-actions">
-        <button type="button" class="btn btn-primary" onclick="confirmDaySelection()">Select Day</button>
-        <button type="button" class="btn btn-secondary" onclick="closeModal('selectDayModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="confirmGuidanceAction()">Select Day</button>
+        <button class="btn btn-secondary" onclick="closeModal('guidanceActionModal')">Cancel</button>
       </div>
     </div>
   </div>
 
+  <!-- JavaScript App Logic -->
   <script>
-    /* ==========================================================================
-       MOCK DATA STATE
-       ========================================================================== */
-    let currentUser = null;
-
-    // Student Master Roster (from Image 2)
-    let students = [
-      { student_id: 4, student_number: '2026-0004', name: 'Bags, Rom Sar', gender: 'Male', section_name: 'Alpha' },
-      { student_id: 1, student_number: '2026-0001', name: 'Dela Cruz, Juan M.', gender: 'Male', section_name: 'Alpha' },
-      { student_id: 5, student_number: '2026-0005', name: 'Gus, Nick Jena', gender: 'Male', section_name: 'Alpha' },
-      { student_id: 3, student_number: '2026-0003', name: 'Reyes, Mark A.', gender: 'Male', section_name: 'Alpha' },
-      { student_id: 9, student_number: '12763492', name: 'Dala, Maya Sanches', gender: 'Female', section_name: 'Alpha' },
-      { student_id: 2, student_number: '2026-0002', name: 'Santos, Maria S.', gender: 'Female', section_name: 'Alpha' }
-    ];
-
-    // Guidance Records incorporating all students from Image 2
-    let assessmentLogs = [
-      {
-        log_id: 102,
-        timestamp: '2026-09-29 08:30:11',
-        student_name: 'Santos, Maria S.',
-        section_name: 'Alpha',
-        assessment_event: 'Mood: Distracted | Interaction: Low',
-        status: 'Flagged for Follow-up',
-        week_graph: [
-          { day: 'Mon', status: 'Normal' },
-          { day: 'Tue', status: 'Normal' },
-          { day: 'Wed', status: 'Flagged' },
-          { day: 'Thu', status: 'Normal' },
-          { day: 'Fri', status: 'Flagged' }
-        ]
-      },
-      {
-        log_id: 101,
-        timestamp: '2026-09-29 08:15:22',
-        student_name: 'Dela Cruz, Juan M.',
-        section_name: 'Alpha',
-        assessment_event: 'Mood: Focused | Interaction: Active',
-        status: 'Normal',
-        week_graph: [
-          { day: 'Mon', status: 'Normal' },
-          { day: 'Tue', status: 'Normal' },
-          { day: 'Wed', status: 'Normal' },
-          { day: 'Thu', status: 'Normal' },
-          { day: 'Fri', status: 'Normal' }
-        ]
-      },
-      {
-        log_id: 103,
-        timestamp: '2026-09-29 08:40:00',
-        student_name: 'Bags, Rom Sar',
-        section_name: 'Alpha',
-        assessment_event: 'Mood: Focused | Interaction: Active',
-        status: 'Normal',
-        week_graph: [
-          { day: 'Mon', status: 'Normal' },
-          { day: 'Tue', status: 'Normal' },
-          { day: 'Wed', status: 'Normal' },
-          { day: 'Thu', status: 'Normal' },
-          { day: 'Fri', status: 'Normal' }
-        ]
-      },
-      {
-        log_id: 104,
-        timestamp: '2026-09-29 08:45:10',
-        student_name: 'Gus, Nick Jena',
-        section_name: 'Alpha',
-        assessment_event: 'Mood: Drowsy | Interaction: Moderate',
-        status: 'Flagged for Follow-up',
-        week_graph: [
-          { day: 'Mon', status: 'Normal' },
-          { day: 'Tue', status: 'Flagged' },
-          { day: 'Wed', status: 'Normal' },
-          { day: 'Thu', status: 'Flagged' },
-          { day: 'Fri', status: 'Flagged' }
-        ]
-      },
-      {
-        log_id: 105,
-        timestamp: '2026-09-29 08:50:00',
-        student_name: 'Reyes, Mark A.',
-        section_name: 'Alpha',
-        assessment_event: 'Mood: Focused | Interaction: Active',
-        status: 'Normal',
-        week_graph: [
-          { day: 'Mon', status: 'Normal' },
-          { day: 'Tue', status: 'Normal' },
-          { day: 'Wed', status: 'Normal' },
-          { day: 'Thu', status: 'Normal' },
-          { day: 'Fri', status: 'Normal' }
-        ]
-      },
-      {
-        log_id: 106,
-        timestamp: '2026-09-29 08:55:00',
-        student_name: 'Dala, Maya Sanches',
-        section_name: 'Alpha',
-        assessment_event: 'Mood: Focused | Interaction: Active',
-        status: 'Normal',
-        week_graph: [
-          { day: 'Mon', status: 'Normal' },
-          { day: 'Tue', status: 'Normal' },
-          { day: 'Wed', status: 'Normal' },
-          { day: 'Thu', status: 'Normal' },
-          { day: 'Fri', status: 'Normal' }
-        ]
-      }
-    ];
-
-    let currentReviewContext = { type: '', studentName: '' };
-
-    /* ==========================================================================
-       INITIALIZATION
-       ========================================================================== */
-    window.onload = function() {
-      // Direct login to Guidance view for immediate inspection
-      currentUser = { name: 'BAGUSAIA', category: 'Teacher with Advisory' };
-      document.getElementById('authModal').classList.add('hidden');
-      document.getElementById('userInfo').classList.remove('hidden');
-      document.getElementById('appContent').classList.remove('hidden');
-      renderGuidanceTable();
+    // INITIAL APP STATE
+    let state = {
+      currentUser: null,
+      students: [
+        { id: 101, lrn: '102938475601', firstName: 'Juan M.', lastName: 'Dela Cruz', image: 'None', gender: 'Male', section: 'Alpha', exam1: 90, exam2: 88, quizzes: [{ score: 88, max: 100 }, { score: 92, max: 100 }], perf: [{ score: 90, max: 100 }] },
+        { id: 102, lrn: '102938475602', firstName: 'Maria S.', lastName: 'Santos', image: 'None', gender: 'Female', section: 'Alpha', exam1: 65, exam2: 70, quizzes: [{ score: 60, max: 100 }, { score: 70, max: 100 }], perf: [{ score: 65, max: 100 }] },
+        { id: 103, lrn: '102938475603', firstName: 'Rom Sar', lastName: 'Bags', image: 'None', gender: 'Male', section: 'Alpha', exam1: 95, exam2: 92, quizzes: [{ score: 94, max: 100 }, { score: 96, max: 100 }], perf: [{ score: 98, max: 100 }] },
+        { id: 104, lrn: '102938475604', firstName: 'Nick Jena', lastName: 'Gus', image: 'None', gender: 'Male', section: 'Alpha', exam1: 70, exam2: 75, quizzes: [{ score: 68, max: 100 }, { score: 72, max: 100 }], perf: [{ score: 70, max: 100 }] },
+        { id: 105, lrn: '102938475605', firstName: 'Mark A.', lastName: 'Reyes', image: 'None', gender: 'Male', section: 'Alpha', exam1: 88, exam2: 85, quizzes: [{ score: 85, max: 100 }, { score: 90, max: 100 }], perf: [{ score: 87, max: 100 }] },
+        { id: 106, lrn: '102938475606', firstName: 'Maya Sanches', lastName: 'Dala', image: 'None', gender: 'Female', section: 'Alpha', exam1: 92, exam2: 90, quizzes: [{ score: 90, max: 100 }, { score: 95, max: 100 }], perf: [{ score: 93, max: 100 }] }
+      ],
+      schedules: [
+        { id: 1, subject: 'Science', teacher: 'BAGUSAIA', section: 'Alpha', day: 'Mon, Wed, Fri', start: '08:00', end: '09:00' },
+        { id: 2, subject: 'Mathematics', teacher: 'Prof. Santos', section: 'Alpha', day: 'Tue, Thu', start: '09:15', end: '10:15' }
+      ],
+      quizzesList: [
+        { title: 'Quiz 1', items: 100 },
+        { title: 'Quiz 2', items: 100 }
+      ],
+      perfList: [
+        { title: 'Perf Task 1', items: 100 }
+      ],
+      guidanceLogs: [
+        { logId: 102, timestamp: '2026-09-29 08:30:11', studentName: 'Santos, Maria S.', section: 'Alpha', event: 'Mood: Distracted | Interaction: Low', status: 'Flagged for Follow-up', days: ['ok', 'warn', 'warn', 'ok', 'warn'], flagged: true },
+        { logId: 104, timestamp: '2026-09-29 08:45:10', studentName: 'Gus, Nick Jena', section: 'Alpha', event: 'Mood: Drowsy | Interaction: Moderate', status: 'Flagged for Follow-up', days: ['ok', 'warn', 'ok', 'warn', 'warn'], flagged: true },
+        { logId: 101, timestamp: '2026-09-29 08:15:22', studentName: 'Dela Cruz, Juan M.', section: 'Alpha', event: 'Mood: Focused | Interaction: Active', status: 'Normal', days: ['ok', 'ok', 'ok', 'ok', 'ok'], flagged: false },
+        { logId: 103, timestamp: '2026-09-29 08:40:00', studentName: 'Bags, Rom Sar', section: 'Alpha', event: 'Mood: Focused | Interaction: Active', status: 'Normal', days: ['ok', 'ok', 'ok', 'ok', 'ok'], flagged: false },
+        { logId: 105, timestamp: '2026-09-29 08:50:00', studentName: 'Reyes, Mark A.', section: 'Alpha', event: 'Mood: Focused | Interaction: Active', status: 'Normal', days: ['ok', 'ok', 'ok', 'ok', 'ok'], flagged: false },
+        { logId: 106, timestamp: '2026-09-29 08:55:00', studentName: 'Dala, Maya Sanches', section: 'Alpha', event: 'Mood: Focused | Interaction: Active', status: 'Normal', days: ['ok', 'ok', 'ok', 'ok', 'ok'], flagged: false }
+      ]
     };
 
-    function togglePasswordVisibility(inputId, icon) {
-      const input = document.getElementById(inputId);
-      input.type = input.type === 'password' ? 'text' : 'password';
+    // AUTHENTICATION LOGIC
+    function switchAuthTab(tab) {
+      if (tab === 'register') {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerForm').classList.remove('hidden');
+        document.getElementById('authTitle').innerText = 'Register Workbench Account';
+      } else {
+        document.getElementById('registerForm').classList.add('hidden');
+        document.getElementById('loginForm').classList.remove('hidden');
+        document.getElementById('authTitle').innerText = 'Login to Workbench';
+      }
     }
 
-    function handleLoginSubmit(event) {
-      event.preventDefault();
+    function togglePasswordVisibility(fieldId, icon) {
+      const field = document.getElementById(fieldId);
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        field.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      state.currentUser = {
+        name: 'BAGUSAIA',
+        category: 'Teacher with Advisory'
+      };
       document.getElementById('authModal').classList.add('hidden');
       document.getElementById('userInfo').classList.remove('hidden');
       document.getElementById('appContent').classList.remove('hidden');
-      renderGuidanceTable();
+      renderAll();
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const fn = document.getElementById('regFirstName').value;
+      const ln = document.getElementById('regLastName').value;
+      const cat = document.getElementById('regTeacherCategory').value;
+      state.currentUser = { name: `${ln.toUpperCase()}, ${fn}`, category: cat };
+      document.getElementById('authModal').classList.add('hidden');
+      document.getElementById('userInfo').classList.remove('hidden');
+      document.getElementById('appContent').classList.remove('hidden');
+      renderAll();
     }
 
     function handleLogout() {
+      state.currentUser = null;
+      document.getElementById('authModal').classList.remove('hidden');
       document.getElementById('userInfo').classList.add('hidden');
       document.getElementById('appContent').classList.add('hidden');
-      document.getElementById('authModal').classList.remove('hidden');
     }
 
+    // PERSPECTIVE SWITCHING
     function handlePerspectiveChange() {
       const selected = document.getElementById('perspectiveSwitcher').value;
-      document.getElementById('adviserSection').classList.toggle('hidden', selected !== 'Adviser Perspective');
-      document.getElementById('guidanceSection').classList.toggle('hidden', selected !== 'Guidance Perspective');
-      document.getElementById('actionButtons').classList.toggle('hidden', selected !== 'Adviser Perspective');
+      document.querySelectorAll('.role-section').forEach(sec => sec.classList.add('hidden'));
 
-      if (selected === 'Guidance Perspective') {
+      if (selected === 'adviser') {
+        document.getElementById('adviserSection').classList.remove('hidden');
+      } else if (selected === 'teacher') {
+        document.getElementById('teacherSection').classList.remove('hidden');
+        renderTeacherGradebook();
+      } else if (selected === 'guidance') {
+        document.getElementById('guidanceSection').classList.remove('hidden');
         renderGuidanceTable();
       }
     }
 
-    /* ==========================================================================
-       GUIDANCE PERSPECTIVE LOGIC
-       ========================================================================== */
+    // RENDER FUNCTIONS
+    function renderAll() {
+      renderStudentRoster();
+      renderSchedules();
+      renderTeacherGradebook();
+      renderGuidanceTable();
+    }
+
+    // 1. ADVISER ROSTER
+    function renderStudentRoster() {
+      const tbody = document.getElementById('studentTableBody');
+      tbody.innerHTML = '';
+      state.students.forEach(s => {
+        let imgDisplay = (s.image && s.image.trim() !== '' && s.image.toLowerCase() !== 'none')
+          ? `<img src="${s.image}" class="student-img-thumb" alt="photo" onerror="this.outerHTML='<span class=\\'no-img-badge\\'>None</span>'">`
+          : `<span class="no-img-badge">None</span>`;
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.id}</td>
+            <td>${imgDisplay}</td>
+            <td>${s.lrn}</td>
+            <td><strong>${s.lastName}, ${s.firstName}</strong></td>
+            <td>${s.gender}</td>
+            <td>${s.section}</td>
+            <td>
+              <button class="btn btn-secondary btn-sm" onclick="openEditStudentModal(${s.id})"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // 2. CLASS SCHEDULES
+    function renderSchedules() {
+      const tbody = document.getElementById('scheduleTableBody');
+      tbody.innerHTML = '';
+      state.schedules.forEach(s => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.id}</td>
+            <td><strong>${s.subject}</strong></td>
+            <td>${s.teacher}</td>
+            <td>${s.section}</td>
+            <td>${s.day}</td>
+            <td>${s.start}</td>
+            <td>${s.end}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="deleteSchedule(${s.id})"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // 3. SUBJECT TEACHER GRADEBOOK
+    function renderTeacherGradebook() {
+      const headerRow = document.getElementById('gradebookHeaderRow');
+      headerRow.innerHTML = `
+        <th>LRN</th>
+        <th>Student Name</th>
+        <th>Gender</th>
+        <th>Exam 1 (100)</th>
+        <th>Exam 2 (100)</th>
+      `;
+
+      state.quizzesList.forEach((q, idx) => {
+        headerRow.innerHTML += `
+          <th>
+            <div class="col-header-del">
+              <span>${q.title} (${q.items})</span>
+              <i class="fa-solid fa-xmark btn-del-col" title="Delete Quiz" onclick="deleteQuizColumn(${idx})"></i>
+            </div>
+          </th>`;
+      });
+
+      state.perfList.forEach((p, idx) => {
+        headerRow.innerHTML += `
+          <th>
+            <div class="col-header-del">
+              <span>${p.title} (${p.items})</span>
+              <i class="fa-solid fa-xmark btn-del-col" title="Delete Task" onclick="deletePerfColumn(${idx})"></i>
+            </div>
+          </th>`;
+      });
+
+      headerRow.innerHTML += `<th>Average Grade</th>`;
+
+      const tbody = document.getElementById('teacherGradebookBody');
+      tbody.innerHTML = '';
+
+      state.students.forEach((s, sIdx) => {
+        // Quiz Percentage Sum
+        let qPctSum = 0;
+        s.quizzes.forEach((qObj, idx) => {
+          let max = state.quizzesList[idx] ? state.quizzesList[idx].items : 100;
+          qPctSum += ((qObj.score || 0) / max) * 100;
+        });
+        let qAvgPct = s.quizzes.length ? (qPctSum / s.quizzes.length) : 0;
+
+        // Performance Percentage Sum
+        let pPctSum = 0;
+        s.perf.forEach((pObj, idx) => {
+          let max = state.perfList[idx] ? state.perfList[idx].items : 100;
+          pPctSum += ((pObj.score || 0) / max) * 100;
+        });
+        let pAvgPct = s.perf.length ? (pPctSum / s.perf.length) : 0;
+
+        // Exams Average Percentage
+        let examAvgPct = ((s.exam1 || 0) + (s.exam2 || 0)) / 2;
+
+        // Weighted Total Average Calculation: Exams 40%, Quizzes 30%, Performance 30%
+        let totalAvg = Math.round((examAvgPct * 0.4) + (qAvgPct * 0.3) + (pAvgPct * 0.3));
+        let badgeClass = totalAvg >= 75 ? 'grade-pass' : 'grade-fail';
+
+        let rowHtml = `
+          <tr>
+            <td>${s.lrn}</td>
+            <td><strong>${s.lastName}, ${s.firstName}</strong></td>
+            <td>${s.gender}</td>
+            <td><input type="number" class="score-input" value="${s.exam1}" onchange="updateExamScore(${sIdx}, 1, this.value)"></td>
+            <td><input type="number" class="score-input" value="${s.exam2}" onchange="updateExamScore(${sIdx}, 2, this.value)"></td>
+        `;
+
+        s.quizzes.forEach((qObj, qIdx) => {
+          rowHtml += `<td><input type="number" class="score-input" value="${qObj.score}" onchange="updateQuizScore(${sIdx}, ${qIdx}, this.value)"></td>`;
+        });
+
+        s.perf.forEach((pObj, pIdx) => {
+          rowHtml += `<td><input type="number" class="score-input" value="${pObj.score}" onchange="updatePerfScore(${sIdx}, ${pIdx}, this.value)"></td>`;
+        });
+
+        rowHtml += `<td><span class="grade-badge ${badgeClass}">${totalAvg}%</span></td></tr>`;
+        tbody.innerHTML += rowHtml;
+      });
+    }
+
+    function addQuizColumn() {
+      const itemsInput = prompt('Enter total items for the new Quiz:', '100');
+      if (itemsInput === null) return;
+      const items = parseInt(itemsInput) || 100;
+
+      const qNum = state.quizzesList.length + 1;
+      state.quizzesList.push({ title: `Quiz ${qNum}`, items: items });
+      state.students.forEach(s => s.quizzes.push({ score: Math.round(items * 0.85), max: items }));
+      renderTeacherGradebook();
+    }
+
+    function deleteQuizColumn(index) {
+      state.quizzesList.splice(index, 1);
+      state.students.forEach(s => s.quizzes.splice(index, 1));
+      renderTeacherGradebook();
+    }
+
+    function addPerformanceColumn() {
+      const itemsInput = prompt('Enter total items for the new Performance Task:', '100');
+      if (itemsInput === null) return;
+      const items = parseInt(itemsInput) || 100;
+
+      const pNum = state.perfList.length + 1;
+      state.perfList.push({ title: `Perf Task ${pNum}`, items: items });
+      state.students.forEach(s => s.perf.push({ score: Math.round(items * 0.88), max: items }));
+      renderTeacherGradebook();
+    }
+
+    function deletePerfColumn(index) {
+      state.perfList.splice(index, 1);
+      state.students.forEach(s => s.perf.splice(index, 1));
+      renderTeacherGradebook();
+    }
+
+    function updateExamScore(sIdx, examNum, val) {
+      if (examNum === 1) state.students[sIdx].exam1 = Number(val);
+      else if (examNum === 2) state.students[sIdx].exam2 = Number(val);
+      renderTeacherGradebook();
+    }
+    function updateQuizScore(sIdx, qIdx, val) {
+      state.students[sIdx].quizzes[qIdx].score = Number(val);
+      renderTeacherGradebook();
+    }
+    function updatePerfScore(sIdx, pIdx, val) {
+      state.students[sIdx].perf[pIdx].score = Number(val);
+      renderTeacherGradebook();
+    }
+
+    // 4. GUIDANCE PERSPECTIVE
     function renderGuidanceTable() {
       const tbody = document.getElementById('assessmentLogTableBody');
       tbody.innerHTML = '';
+      
+      const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
-      // Sort: Non-normal status at top
-      const sortedLogs = [...assessmentLogs].sort((a, b) => {
-        const aIsNormal = a.status.toLowerCase() === 'normal';
-        const bIsNormal = b.status.toLowerCase() === 'normal';
-        if (!aIsNormal && bIsNormal) return -1;
-        if (aIsNormal && !bIsNormal) return 1;
-        return 0;
-      });
+      state.guidanceLogs.forEach(g => {
+        let rowClass = g.flagged ? 'flagged-row' : 'normal-row';
+        let statusStyle = g.flagged ? 'color: #dc2626; font-weight: bold;' : 'color: #16a34a; font-weight: bold;';
 
-      sortedLogs.forEach(log => {
-        const isNormal = log.status.toLowerCase() === 'normal';
-        const rowClass = !isNormal ? 'row-flagged' : '';
+        let graphHtml = '<div class="week-graph">';
+        g.days.forEach((d, i) => {
+          let badgeType = d === 'ok' ? 'ok' : 'warn';
+          let symbol = d === 'ok' ? '✓' : '!';
+          graphHtml += `<div class="day-badge ${badgeType}"><span>${dayNames[i]}</span><span>${symbol}</span></div>`;
+        });
+        graphHtml += '</div>';
 
-        // Generate 5-day graph HTML
-        const weekGraphHtml = `
-          <div class="week-graph">
-            ${log.week_graph.map(d => `
-              <div class="day-pill ${d.status === 'Normal' ? 'status-normal' : 'status-flagged'}">
-                <span>${d.day}</span>
-                <span>${d.status === 'Normal' ? '✓' : '!'}</span>
-              </div>
-            `).join('')}
-          </div>
-        `;
-
-        const row = `
+        tbody.innerHTML += `
           <tr class="${rowClass}">
-            <td>${log.log_id}</td>
-            <td>${log.timestamp}</td>
-            <td><strong>${log.student_name}</strong></td>
-            <td>${log.section_name}</td>
-            <td>${log.assessment_event}</td>
+            <td>${g.logId}</td>
+            <td style="font-size:0.75rem; color:#64748b;">${g.timestamp}</td>
+            <td><strong>${g.studentName}</strong></td>
+            <td>${g.section}</td>
+            <td style="font-size:0.8rem;">${g.event}</td>
+            <td style="${statusStyle}">${g.status}</td>
+            <td>${graphHtml}</td>
             <td>
-              <span style="font-weight: 600; color: ${isNormal ? '#16a34a' : '#dc2626'}">
-                ${log.status}
-              </span>
-            </td>
-            <td>${weekGraphHtml}</td>
-            <td>
-              <div class="action-btn-group">
-                <button class="btn btn-primary btn-small" onclick="openSelectDayModal('Interaction', '${log.student_name}')">
-                  <i class="fa-solid fa-comments"></i> Review Interaction
-                </button>
-                <button class="btn btn-warning btn-small" onclick="openSelectDayModal('Video', '${log.student_name}')">
-                  <i class="fa-solid fa-video"></i> Review Video
-                </button>
+              <div style="display:flex; flex-direction:column; gap:3px;">
+                <button class="btn btn-primary btn-sm" onclick="openGuidanceModal('Review Interaction', '${g.studentName}')"><i class="fa-solid fa-comments"></i> Review Interaction</button>
+                <button class="btn btn-warning btn-sm" onclick="openGuidanceModal('Review Video', '${g.studentName}')"><i class="fa-solid fa-video"></i> Review Video</button>
               </div>
             </td>
           </tr>
         `;
-        tbody.insertAdjacentHTML('beforeend', row);
       });
     }
 
-    /* ==========================================================================
-       REVIEW & MODAL HANDLERS
-       ========================================================================== */
-    function openSelectDayModal(type, studentName) {
-      currentReviewContext = { type, studentName };
-      document.getElementById('selectDayModalTitle').innerText = `Review ${type}`;
-      document.getElementById('selectDayModalSub').innerText = `Select day for student: ${studentName}`;
-      document.getElementById('selectDayModal').classList.remove('hidden');
+    function openGuidanceModal(action, studentName) {
+      document.getElementById('guidanceModalTitle').innerText = action;
+      document.getElementById('guidanceModalSub').innerText = `Select day for student: ${studentName}`;
+      document.getElementById('guidanceActionModal').classList.remove('hidden');
     }
 
-    function confirmDaySelection() {
-      const selectedDay = document.getElementById('reviewDaySelect').value;
-      closeModal('selectDayModal');
+    function confirmGuidanceAction() {
+      alert('File is not found');
+      closeModal('guidanceActionModal');
+    }
+
+    // MODAL & FORM HANDLERS
+    function openAddStudentModal() {
+      document.getElementById('addStudentForm').reset();
+      document.getElementById('editStudentId').value = '';
+      document.getElementById('studImageUrl').value = 'None';
+      document.getElementById('studentModalTitle').innerText = 'Add Student';
+      document.getElementById('addStudentModal').classList.remove('hidden');
+    }
+
+    function openEditStudentModal(id) {
+      const student = state.students.find(s => s.id === id);
+      if (!student) return;
+      document.getElementById('editStudentId').value = student.id;
+      document.getElementById('studNumber').value = student.lrn;
+      document.getElementById('studFirstName').value = student.firstName;
+      document.getElementById('studLastName').value = student.lastName;
+      document.getElementById('studImageUrl').value = student.image || 'None';
+      document.getElementById('studGender').value = student.gender;
+      document.getElementById('studSectionSelect').value = student.section;
+      document.getElementById('studentModalTitle').innerText = 'Edit Student';
+      document.getElementById('addStudentModal').classList.remove('hidden');
+    }
+
+    function handleSaveStudent(e) {
+      e.preventDefault();
+      const editId = document.getElementById('editStudentId').value;
+      const lrn = document.getElementById('studNumber').value;
+      const firstName = document.getElementById('studFirstName').value;
+      const lastName = document.getElementById('studLastName').value;
+      const image = document.getElementById('studImageUrl').value || 'None';
+      const gender = document.getElementById('studGender').value;
+      const section = document.getElementById('studSectionSelect').value;
+
+      if (editId) {
+        const student = state.students.find(s => s.id == editId);
+        student.lrn = lrn;
+        student.firstName = firstName;
+        student.lastName = lastName;
+        student.image = image;
+        student.gender = gender;
+        student.section = section;
+      } else {
+        const newStudent = {
+          id: Date.now(),
+          lrn, firstName, lastName, image, gender, section,
+          exam1: 85, exam2: 85,
+          quizzes: state.quizzesList.map(q => ({ score: Math.round(q.items * 0.85), max: q.items })),
+          perf: state.perfList.map(p => ({ score: Math.round(p.items * 0.85), max: p.items }))
+        };
+        state.students.push(newStudent);
+      }
+      closeModal('addStudentModal');
+      renderAll();
+    }
+
+    function deleteStudent(id) {
+      if (confirm('Are you sure you want to delete this student?')) {
+        state.students = state.students.filter(s => s.id !== id);
+        renderAll();
+      }
+    }
+
+    function openAddScheduleModal() {
+      document.getElementById('addScheduleForm').reset();
+      document.getElementById('addScheduleModal').classList.remove('hidden');
+    }
+
+    function handleSaveSchedule(e) {
+      e.preventDefault();
+      const subject = document.getElementById('schedSubject').value;
+      const teacher = document.getElementById('schedTeacher').value;
+      const start = document.getElementById('schedStart').value;
+      const end = document.getElementById('schedEnd').value;
       
-      // Default pop-up notification when any day is selected
-      alert(`File is not found`);
+      const days = Array.from(document.querySelectorAll('input[name="schedDay"]:checked')).map(cb => cb.value).join(', ');
+
+      state.schedules.push({
+        id: Date.now(),
+        subject,
+        teacher,
+        section: 'Alpha',
+        day: days || 'Mon-Fri',
+        start,
+        end
+      });
+
+      closeModal('addScheduleModal');
+      renderSchedules();
+    }
+
+    function deleteSchedule(id) {
+      if (confirm('Delete this schedule?')) {
+        state.schedules = state.schedules.filter(s => s.id !== id);
+        renderSchedules();
+      }
     }
 
     function closeModal(modalId) {
