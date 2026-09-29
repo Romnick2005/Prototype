@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Monitoring System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #f4f6f9;
+      color: #333;
+    }
+    /* Header & Top Bar */
+    header {
+      background-color: #1e293b;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-brand h1 {
+      font-size: 1.5rem;
+      color: #fff;
+    }
+    .user-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .composite-name {
+      font-weight: 600;
+    }
+    .role-badge {
+      background-color: #3b82f6;
+      color: #fff;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+    /* Layout Containers */
+    .container {
+      max-width: 1250px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    .card h2, section h2 {
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+    .card h3 {
+      color: #1e293b;
+      margin-bottom: 0.3rem;
+    }
+    .card-meta {
+      color: #64748b;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    /* Forms & Inputs */
+    .form-group {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .form-row .form-group {
+      flex: 1;
+      min-width: 150px;
+    }
+    .form-group label {
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .form-group input, 
+    .form-group select,
+    .user-controls select {
+      padding: 0.6rem;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .user-controls select {
+      padding: 0.4rem;
+      background: #fff;
+      color: #333;
+    }
+    .error-msg {
+      color: #ef4444;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      min-height: 1.1rem;
+      display: block;
+    }
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .password-wrapper input {
+      padding-right: 2.5rem;
+    }
+    .password-wrapper .toggle-password {
+      position: absolute;
+      right: 0.75rem;
+      cursor: pointer;
+      color: #64748b;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: normal !important;
+      cursor: pointer;
+      background: #f1f5f9;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+    }
+    .auth-toggle {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .auth-toggle a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    /* Buttons */
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+    }
+    .btn-primary {
+      background-color: #2563eb;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+    .btn-secondary {
+      background-color: #64748b;
+      color: #fff;
+    }
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+    .btn-danger {
+      background-color: #ef4444;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+    .btn-warning {
+      background-color: #f59e0b;
+      color: #fff;
+    }
+    .btn-warning:hover {
+      background-color: #d97706;
+    }
+    .btn-small {
+      padding: 0.35rem 0.6rem;
+      font-size: 0.8rem;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    .action-toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    /* Tables */
+    .data-table, table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      background: #fff;
+    }
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    th {
+      background-color: #f1f5f9;
+      font-weight: 600;
+      color: #334155;
+    }
+    tr.gender-header td {
+      background-color: #e2e8f0;
+      font-weight: bold;
+      color: #475569;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    
+    /* Guidance Perspective Custom Styles */
+    tr.row-flagged {
+      border-left: 5px solid #ef4444 !important;
+      background-color: #fef2f2;
+    }
+    .week-graph {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .day-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      min-width: 38px;
+    }
+    .status-normal {
+      background-color: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+    .status-flagged {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+    }
+    .action-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* Modals & Overlays */
+    .auth-overlay, .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(2px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    .modal-card h2, .modal-card h3 {
+      margin-bottom: 1.2rem;
+      color: #1e293b;
+    }
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTHENTICATION MODAL OVERLAY -->
+  <div id="authModal" class="auth-overlay">
+    <div id="loginModal" class="modal-card">
+      <h2 id="authTitle">Please Log In</h2>
+      
+      <!-- LOGIN FORM -->
+      <form id="loginForm" novalidate onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" required placeholder="teacher@school.edu" value="bagusaia@gmail.com">
+          <span class="error-msg" id="loginEmailError"></span>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="loginPassword" required placeholder="••••••••" value="123456">
+            <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordVisibility('loginPassword', this)"></i>
+          </div>
+          <span class="error-msg" id="loginPasswordError"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Log In</button>
+        <p class="auth-toggle">Don't have an account? <a href="#" onclick="switchAuthTab('register')">Register here</a></p>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="registerForm" class="hidden" novalidate onsubmit="handleRegisterSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="regFirstName">First Name *</label>
+            <input type="text" id="regFirstName" required placeholder="Maria">
+          </div>
+          <div class="form-group">
+            <label for="regMiddleName">Middle Name</label>
+            <input type="text" id="regMiddleName" placeholder="Santos">
+          </div>
+          <div class="form-group">
+            <label for="regLastName">Last Name *</label>
+            <input type="text" id="regLastName" required placeholder="Dela Cruz">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="regEmail">Email Address *</label>
+            <input type="email" id="regEmail" required placeholder="teacher@school.edu">
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Password *</label>
+            <div class="password-wrapper">
+              <input type="password" id="regPassword" required placeholder="••••••••">
+              <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordVisibility('regPassword', this)"></i>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regTeacherCategory">Teacher Category *</label>
+          <select id="regTeacherCategory">
+            <option value="Teacher Only">Teacher Only</option>
+            <option value="Teacher with Advisory">Teacher with Advisory</option>
+            <option value="Guidance">Guidance</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Register Account</button>
+        <p class="auth-toggle">Already have an account? <a href="#" onclick="switchAuthTab('login')">Log in here</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- WORKBENCH HEADER -->
+  <header id="mainHeader">
+    <div class="header-brand">
+      <h1>Classroom Monitoring System</h1>
+    </div>
+    
+    <div id="userInfo" class="user-controls hidden">
+      <div class="user-info">
+        <span id="userNameLabel" class="composite-name">BAGUSAIA</span>
+        <span id="userBadge" class="role-badge">Teacher with Advisory</span>
+      </div>
+      <div>
+        <label for="perspectiveSwitcher" style="font-size:0.85rem; margin-right:5px;">Perspective:</label>
+        <select id="perspectiveSwitcher" onchange="handlePerspectiveChange()">
+          <option value="Adviser Perspective">Adviser Perspective</option>
+          <option value="Subject Teacher Perspective">Subject Teacher Perspective</option>
+          <option value="Guidance Perspective" selected>Guidance Perspective</option>
+        </select>
+      </div>
+      <button id="logoutBtn" onclick="handleLogout()" class="btn btn-secondary btn-small">Log Out</button>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main id="appContent" class="container hidden">
+    <div id="actionButtons" class="action-toolbar hidden">
+      <button class="btn btn-primary" onclick="openAddStudentModal()">Add Student</button>
+      <button class="btn btn-primary" onclick="openAddScheduleModal()">Add Schedule</button>
+    </div>
+
+    <!-- ADVISER PERSPECTIVE SECTION -->
+    <section id="adviserSection" class="role-section hidden">
+      <h2>Adviser Perspective - Advisory Class Roster</h2>
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>LRN / Student ID</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Face Photo</th>
+              <th>Section</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- GUIDANCE PERSPECTIVE SECTION -->
+    <section id="guidanceSection" class="role-section">
+      <h2>Guidance Perspective</h2>
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Log ID</th>
+              <th>Timestamp</th>
+              <th>Student Name</th>
+              <th>Section</th>
+              <th>Assessment Event</th>
+              <th>Status</th>
+              <th>Week Graph (5 Days)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="assessmentLogTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- SELECT DAY REVIEW MODAL -->
+  <div id="selectDayModal" class="auth-overlay hidden">
+    <div class="modal-card">
+      <h3 id="selectDayModalTitle">Select Day to Review</h3>
+      <p id="selectDayModalSub" style="margin-bottom: 1rem; color: #64748b; font-size: 0.9rem;"></p>
+      
+      <div class="form-group">
+        <label for="reviewDaySelect">Available Day Logs:</label>
+        <select id="reviewDaySelect">
+          <option value="Mon">Day 1 - Mon (2026-09-25)</option>
+          <option value="Tue">Day 2 - Tue (2026-09-26)</option>
+          <option value="Wed">Day 3 - Wed (2026-09-27)</option>
+          <option value="Thu">Day 4 - Thu (2026-09-28)</option>
+          <option value="Fri">Day 5 - Fri (2026-09-29)</option>
+        </select>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" onclick="confirmDaySelection()">Select Day</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('selectDayModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       MOCK DATA STATE
+       ========================================================================== */
+    let currentUser = null;
+
+    // Student Master Roster (from Image 2)
+    let students = [
+      { student_id: 4, student_number: '2026-0004', name: 'Bags, Rom Sar', gender: 'Male', section_name: 'Alpha' },
+      { student_id: 1, student_number: '2026-0001', name: 'Dela Cruz, Juan M.', gender: 'Male', section_name: 'Alpha' },
+      { student_id: 5, student_number: '2026-0005', name: 'Gus, Nick Jena', gender: 'Male', section_name: 'Alpha' },
+      { student_id: 3, student_number: '2026-0003', name: 'Reyes, Mark A.', gender: 'Male', section_name: 'Alpha' },
+      { student_id: 9, student_number: '12763492', name: 'Dala, Maya Sanches', gender: 'Female', section_name: 'Alpha' },
+      { student_id: 2, student_number: '2026-0002', name: 'Santos, Maria S.', gender: 'Female', section_name: 'Alpha' }
+    ];
+
+    // Guidance Records incorporating all students from Image 2
+    let assessmentLogs = [
+      {
+        log_id: 102,
+        timestamp: '2026-09-29 08:30:11',
+        student_name: 'Santos, Maria S.',
+        section_name: 'Alpha',
+        assessment_event: 'Mood: Distracted | Interaction: Low',
+        status: 'Flagged for Follow-up',
+        week_graph: [
+          { day: 'Mon', status: 'Normal' },
+          { day: 'Tue', status: 'Normal' },
+          { day: 'Wed', status: 'Flagged' },
+          { day: 'Thu', status: 'Normal' },
+          { day: 'Fri', status: 'Flagged' }
+        ]
+      },
+      {
+        log_id: 101,
+        timestamp: '2026-09-29 08:15:22',
+        student_name: 'Dela Cruz, Juan M.',
+        section_name: 'Alpha',
+        assessment_event: 'Mood: Focused | Interaction: Active',
+        status: 'Normal',
+        week_graph: [
+          { day: 'Mon', status: 'Normal' },
+          { day: 'Tue', status: 'Normal' },
+          { day: 'Wed', status: 'Normal' },
+          { day: 'Thu', status: 'Normal' },
+          { day: 'Fri', status: 'Normal' }
+        ]
+      },
+      {
+        log_id: 103,
+        timestamp: '2026-09-29 08:40:00',
+        student_name: 'Bags, Rom Sar',
+        section_name: 'Alpha',
+        assessment_event: 'Mood: Focused | Interaction: Active',
+        status: 'Normal',
+        week_graph: [
+          { day: 'Mon', status: 'Normal' },
+          { day: 'Tue', status: 'Normal' },
+          { day: 'Wed', status: 'Normal' },
+          { day: 'Thu', status: 'Normal' },
+          { day: 'Fri', status: 'Normal' }
+        ]
+      },
+      {
+        log_id: 104,
+        timestamp: '2026-09-29 08:45:10',
+        student_name: 'Gus, Nick Jena',
+        section_name: 'Alpha',
+        assessment_event: 'Mood: Drowsy | Interaction: Moderate',
+        status: 'Flagged for Follow-up',
+        week_graph: [
+          { day: 'Mon', status: 'Normal' },
+          { day: 'Tue', status: 'Flagged' },
+          { day: 'Wed', status: 'Normal' },
+          { day: 'Thu', status: 'Flagged' },
+          { day: 'Fri', status: 'Flagged' }
+        ]
+      },
+      {
+        log_id: 105,
+        timestamp: '2026-09-29 08:50:00',
+        student_name: 'Reyes, Mark A.',
+        section_name: 'Alpha',
+        assessment_event: 'Mood: Focused | Interaction: Active',
+        status: 'Normal',
+        week_graph: [
+          { day: 'Mon', status: 'Normal' },
+          { day: 'Tue', status: 'Normal' },
+          { day: 'Wed', status: 'Normal' },
+          { day: 'Thu', status: 'Normal' },
+          { day: 'Fri', status: 'Normal' }
+        ]
+      },
+      {
+        log_id: 106,
+        timestamp: '2026-09-29 08:55:00',
+        student_name: 'Dala, Maya Sanches',
+        section_name: 'Alpha',
+        assessment_event: 'Mood: Focused | Interaction: Active',
+        status: 'Normal',
+        week_graph: [
+          { day: 'Mon', status: 'Normal' },
+          { day: 'Tue', status: 'Normal' },
+          { day: 'Wed', status: 'Normal' },
+          { day: 'Thu', status: 'Normal' },
+          { day: 'Fri', status: 'Normal' }
+        ]
+      }
+    ];
+
+    let currentReviewContext = { type: '', studentName: '' };
+
+    /* ==========================================================================
+       INITIALIZATION
+       ========================================================================== */
+    window.onload = function() {
+      // Direct login to Guidance view for immediate inspection
+      currentUser = { name: 'BAGUSAIA', category: 'Teacher with Advisory' };
+      document.getElementById('authModal').classList.add('hidden');
+      document.getElementById('userInfo').classList.remove('hidden');
+      document.getElementById('appContent').classList.remove('hidden');
+      renderGuidanceTable();
+    };
+
+    function togglePasswordVisibility(inputId, icon) {
+      const input = document.getElementById(inputId);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function handleLoginSubmit(event) {
+      event.preventDefault();
+      document.getElementById('authModal').classList.add('hidden');
+      document.getElementById('userInfo').classList.remove('hidden');
+      document.getElementById('appContent').classList.remove('hidden');
+      renderGuidanceTable();
+    }
+
+    function handleLogout() {
+      document.getElementById('userInfo').classList.add('hidden');
+      document.getElementById('appContent').classList.add('hidden');
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function handlePerspectiveChange() {
+      const selected = document.getElementById('perspectiveSwitcher').value;
+      document.getElementById('adviserSection').classList.toggle('hidden', selected !== 'Adviser Perspective');
+      document.getElementById('guidanceSection').classList.toggle('hidden', selected !== 'Guidance Perspective');
+      document.getElementById('actionButtons').classList.toggle('hidden', selected !== 'Adviser Perspective');
+
+      if (selected === 'Guidance Perspective') {
+        renderGuidanceTable();
+      }
+    }
+
+    /* ==========================================================================
+       GUIDANCE PERSPECTIVE LOGIC
+       ========================================================================== */
+    function renderGuidanceTable() {
+      const tbody = document.getElementById('assessmentLogTableBody');
+      tbody.innerHTML = '';
+
+      // Sort: Non-normal status at top
+      const sortedLogs = [...assessmentLogs].sort((a, b) => {
+        const aIsNormal = a.status.toLowerCase() === 'normal';
+        const bIsNormal = b.status.toLowerCase() === 'normal';
+        if (!aIsNormal && bIsNormal) return -1;
+        if (aIsNormal && !bIsNormal) return 1;
+        return 0;
+      });
+
+      sortedLogs.forEach(log => {
+        const isNormal = log.status.toLowerCase() === 'normal';
+        const rowClass = !isNormal ? 'row-flagged' : '';
+
+        // Generate 5-day graph HTML
+        const weekGraphHtml = `
+          <div class="week-graph">
+            ${log.week_graph.map(d => `
+              <div class="day-pill ${d.status === 'Normal' ? 'status-normal' : 'status-flagged'}">
+                <span>${d.day}</span>
+                <span>${d.status === 'Normal' ? '✓' : '!'}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        const row = `
+          <tr class="${rowClass}">
+            <td>${log.log_id}</td>
+            <td>${log.timestamp}</td>
+            <td><strong>${log.student_name}</strong></td>
+            <td>${log.section_name}</td>
+            <td>${log.assessment_event}</td>
+            <td>
+              <span style="font-weight: 600; color: ${isNormal ? '#16a34a' : '#dc2626'}">
+                ${log.status}
+              </span>
+            </td>
+            <td>${weekGraphHtml}</td>
+            <td>
+              <div class="action-btn-group">
+                <button class="btn btn-primary btn-small" onclick="openSelectDayModal('Interaction', '${log.student_name}')">
+                  <i class="fa-solid fa-comments"></i> Review Interaction
+                </button>
+                <button class="btn btn-warning btn-small" onclick="openSelectDayModal('Video', '${log.student_name}')">
+                  <i class="fa-solid fa-video"></i> Review Video
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    /* ==========================================================================
+       REVIEW & MODAL HANDLERS
+       ========================================================================== */
+    function openSelectDayModal(type, studentName) {
+      currentReviewContext = { type, studentName };
+      document.getElementById('selectDayModalTitle').innerText = `Review ${type}`;
+      document.getElementById('selectDayModalSub').innerText = `Select day for student: ${studentName}`;
+      document.getElementById('selectDayModal').classList.remove('hidden');
+    }
+
+    function confirmDaySelection() {
+      const selectedDay = document.getElementById('reviewDaySelect').value;
+      closeModal('selectDayModal');
+      
+      // Default pop-up notification when any day is selected
+      alert(`File is not found`);
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
